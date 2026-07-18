@@ -5,6 +5,13 @@
 #include <string>
 #include <fstream>
 using namespace std;
+enum CardType
+{
+    BRONZE,
+    SILVER,
+    GOLD,
+    PLATINUM
+};
 
 class BankAccount {
     
@@ -15,6 +22,14 @@ private:
     int pin;
     bool accountCreated = false;
     static int nextAccountNumber;
+    CardType cardType;
+
+    double withdrawLimit;
+    double loanLimit;
+
+    double upgradeCost = 0;
+    
+    int cardTransactionCount = 0;
 
 public:
     void createAccount();
@@ -25,6 +40,14 @@ public:
     int getpin();
     void depositAmount(double a);
     bool withdrawAmount(double a);
+    
+    void updateCardBenefits();
+    void upgradeCard();
+
+    CardType getCardType();
+    double getWithdrawLimit();
+    double getLoanLimit();
+    string getCardName();
 
 };
 

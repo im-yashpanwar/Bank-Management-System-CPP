@@ -7,7 +7,7 @@ int main()
 
     int choice = 0;
 
-    while (choice <= 6)
+    while (choice <= 7)
     {
     
         cout << "\n----- BANK MENU -----\n";
@@ -17,7 +17,8 @@ int main()
         cout << "3. Withdraw\n";
         cout << "4. Display\n";
         cout << "5. Transfer Money\n";
-        cout << "6. Exit\n";
+        cout << "6. Card Upgrade\n";
+        cout << "7. Exit\n";
 
         cout << "Enter Choice: ";
         cin >> choice;
@@ -230,8 +231,48 @@ int main()
 
                 break;
             }
-            
             case 6:
+            {
+            int accountNumber;
+            int pin;
+
+            cout << "Enter Account Number: ";
+            cin >> accountNumber;
+
+            // Search the account
+            bool found = false;
+
+            for(int i = 0; i < accounts.size(); i++)
+            {
+                if(accounts[i].getAccountNumber() == accountNumber)
+                {
+                    found = true;
+
+                    cout << "Enter PIN: ";
+                    cin >> pin;
+
+                    // Check PIN here
+                    if(accounts[i].getpin() == pin)
+                    {
+                    accounts[i].upgradeCard();
+                    }
+                    else
+                    {
+                    cout << "Incorrect PIN!\n";
+                    }
+
+                    break;
+                }
+            }
+
+            if(!found)
+            {
+                cout << "Account Not Found!\n";
+            }
+
+            break;
+        }
+            case 7:
             {
                 cout << "Exiting Program...\n";
                 break;

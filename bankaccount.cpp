@@ -19,6 +19,11 @@ void BankAccount::createAccount()
     cout<< "your account number is  =  ";
     cout<< AccountNumber;
 
+    cardType = BRONZE;
+    updateCardBenefits();
+
+    cout << endl<<"Bronze Debit Card Issued Successfully!\n"<<endl;
+
 }
 
 void BankAccount::deposit()
@@ -47,11 +52,15 @@ void BankAccount::deposit()
 
 void BankAccount::withdraw()
 {
+
      if (accountCreated == false){
         cout << "\n creat account first \n" << endl;
     }
     else{
     double amount;
+
+     cout << "\n Enter Withdraw Amount: ";
+    cin >> amount;
 
     if(amount <= 0){
 
@@ -59,19 +68,26 @@ void BankAccount::withdraw()
     }
     else{
 
-    cout << "\n Enter Withdraw Amount: ";
-    cin >> amount;
+        if(amount > withdrawLimit)
+        {
+            cout << "\nWithdrawal Limit Exceeded!\n";
+            cout << "Your Card Limit is: " << withdrawLimit << endl;
+            return;
+        }
+   
+        else{
 
-    if(amount > balance)
-    {
-        cout << "Insufficient Balance!\n";
-    }
-    else
-    {
-        balance = balance - amount;
+            if(amount > balance)
+            {
+                cout << "Insufficient Balance!\n";
+            }
+            else
+            {
+                balance = balance - amount;
 
-        cout << "Withdrawal Successful!\n";
-    }
+                cout << "Withdrawal Successful!\n";
+            }
+        }
 }
 }
 }
@@ -80,16 +96,20 @@ void BankAccount::display()
 {
     if(accountCreated == true){
     cout << "\n----- ACCOUNT DETAILS -----\n";
-
     cout << "Name: " << name << endl;
-    cout << "Account Number: " << AccountNumber << endl;
-    cout << "Balance: " << balance << endl;
+        cout << "Account Number: " << AccountNumber << endl;
+        cout << "Balance: Rs. " << balance << endl;
+        cout << "Debit Card: " << getCardName() << endl;
+        cout << "Withdraw Limit: Rs. " << withdrawLimit << endl;
+        cout << "Loan Limit: Rs. " << loanLimit << endl;
+
     }
     else{
         
         cout << "\n Creat Account First \n" <<endl;
     }
 }
+
 
 int BankAccount::getAccountNumber()
 {
@@ -118,3 +138,149 @@ bool BankAccount::withdrawAmount(double a)
     return true;
 }
 
+void BankAccount::updateCardBenefits()
+{
+    if(cardType == BRONZE)
+{
+    withdrawLimit = 10000;
+    loanLimit = 50000;
+    
+}
+
+else if(cardType == SILVER)
+{
+    withdrawLimit = 25000;
+    loanLimit = 100000;
+    
+}
+
+else if(cardType == GOLD)
+{
+    withdrawLimit = 50000;
+    loanLimit = 200000;
+    
+}
+
+else if(cardType == PLATINUM)
+{
+    withdrawLimit = 100000;
+    loanLimit = 500000;
+    
+}
+}
+
+double BankAccount::getWithdrawLimit()
+{
+    return withdrawLimit;
+}
+
+string BankAccount::getCardName()
+{
+    if(cardType == BRONZE)
+        return "Bronze";
+
+    if(cardType == SILVER)
+        return "Silver";
+
+    if(cardType == GOLD)
+        return "Gold";
+
+    return "Platinum";
+}
+
+void BankAccount::upgradeCard()
+{
+    cout << "\nCurrent Card: " << getCardName() << endl;
+
+    cout << "\nUpgrade Options:\n";
+
+    cout << "1. Silver (Rs. 500)\n";
+    cout << "   Withdraw Limit : Rs. 25,000\n";
+    cout << "   Loan Limit     : Rs. 1,00,000\n";
+    
+
+    cout << "2. Gold (Rs. 1000)\n";
+    cout << "   Withdraw Limit : Rs. 50,000\n";
+    cout << "   Loan Limit     : Rs. 2,00,000\n";
+    
+
+    cout << "3. Platinum (Rs. 2000)\n";
+    cout << "   Withdraw Limit : Rs. 1,00,000\n";
+    cout << "   Loan Limit     : Rs. 5,00,000\n";
+    
+
+    int choice;
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    if(choice == 1)
+    {
+        if(cardType == BRONZE)
+        {
+            if(balance >= 500)
+            {
+                balance -= 500;
+                cardType = SILVER;
+                updateCardBenefits();
+                cout << "Congratulations! Your card has been upgraded to Silver.\n";
+            }
+            else
+            {
+                cout << "Insufficient Balance!\n";
+            }
+        }
+        else
+        {
+            cout << "You cannot upgrade to Silver.\n";
+        }
+    }
+
+    else if(choice == 2)
+    {
+        if(cardType == SILVER)
+        {
+            if(balance >= 1000)
+            {
+                balance -= 1000;
+                cardType = GOLD;
+                updateCardBenefits();
+                cout << "Congratulations! Your card has been upgraded to Gold.\n";
+            }
+            else
+            {
+                cout << "Insufficient Balance!\n";
+            }
+        }
+        else
+        {
+            cout << "You must have a Silver card before upgrading to Gold.\n";
+        }
+    }
+
+    else if(choice == 3)
+    {
+        if(cardType == GOLD)
+        {
+            if(balance >= 2000)
+            {
+                balance -= 2000;
+                cardType = PLATINUM;
+                updateCardBenefits();
+                cout << "Congratulations! Your card has been upgraded to Platinum.\n";
+            }
+            else
+            {
+                cout << "Insufficient Balance!\n";
+            }
+        }
+        else
+        {
+            cout << "You must have a Gold card before upgrading to Platinum.\n";
+        }
+    }
+
+    else
+    {
+        cout << "Invalid Choice!\n";
+    }
+}
