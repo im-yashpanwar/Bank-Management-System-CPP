@@ -28,8 +28,9 @@ private:
     double loanLimit;
 
     double upgradeCost = 0;
-    
     int cardTransactionCount = 0;
+    double loanAmount;
+    bool hasLoan;
 
 public:
     void createAccount();
@@ -48,6 +49,8 @@ public:
     double getWithdrawLimit();
     double getLoanLimit();
     string getCardName();
+
+    void takeLoan();
 
 };
 

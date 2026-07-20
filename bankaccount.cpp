@@ -21,8 +21,10 @@ void BankAccount::createAccount()
 
     cardType = BRONZE;
     updateCardBenefits();
-
     cout << endl<<"Bronze Debit Card Issued Successfully!\n"<<endl;
+
+    loanAmount = 0;
+    hasLoan = false;
 
 }
 
@@ -283,4 +285,39 @@ void BankAccount::upgradeCard()
     {
         cout << "Invalid Choice!\n";
     }
+}
+
+void BankAccount::takeLoan()
+{
+     double amount;
+
+    cout << "Enter Loan Amount: ";
+    cin >> amount;
+
+    if(amount <= 0)
+    {
+        cout << "Invalid Loan Amount!\n";
+        return;
+    }
+
+    if(hasLoan)
+    {
+        cout << "You already have an active loan.\n";
+        return;
+    }
+
+     if(amount > loanLimit)
+    {
+        cout << "Loan Limit Exceeded!\n";
+        cout << "Your Maximum Loan Limit is Rs. " << loanLimit << endl;
+        return;
+    }
+
+    balance += amount;
+    loanAmount = amount;
+    hasLoan = true;
+
+    cout << "Loan Approved Successfully!\n";
+    cout << "Loan Amount: Rs. " << loanAmount << endl;
+    cout << "Current Balance: Rs. " << balance << endl;
 }
