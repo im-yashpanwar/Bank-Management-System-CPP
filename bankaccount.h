@@ -25,12 +25,28 @@ private:
     CardType cardType;
 
     double withdrawLimit;
-    double loanLimit;
 
     double upgradeCost = 0;
     int cardTransactionCount = 0;
+
     double loanAmount;
+    double loanLimit;
     bool hasLoan;
+
+    double interestRate = 0;
+    double interestAmount = 0;
+    double totalRepayment = 0;
+
+    double emiAmount = 0;
+
+    int totalInstallments = 0;
+    int remainingInstallments = 0;
+
+    int emiTransactionCount = 0;
+    int warningCount = 0;
+
+    bool pendingEMI = false;
+    bool accountFrozen = false;
 
 public:
     void createAccount();
@@ -51,6 +67,10 @@ public:
     string getCardName();
 
     void takeLoan();
+    void setupLoan();
+    void closeLoan();
+    void processEMI();
+    void payPendingEMI();
 
 };
 
